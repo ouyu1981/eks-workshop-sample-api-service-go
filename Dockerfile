@@ -1,18 +1,15 @@
-# This is a multi-stage build. First we are going to compile and then
-# create a small image for runtime.
-FROM golang:1.11.1 as builder
+FROM centos:6
 
-RUN mkdir -p /go/src/github.com/eks-workshop-sample-api-service-go
-WORKDIR /go/src/github.com/eks-workshop-sample-api-service-go
-RUN useradd -u 10001 app
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+MAINTAINER "fontesj" <fontesj@amazon.com>
 
-FROM scratch
+RUN yum -y install httpd php php-cli mod_security jq
+RUN /sbin/chkconfig httpd on
 
-COPY --from=builder /go/src/github.com/eks-workshop-sample-api-service-go/main /main
-COPY --from=builder /etc/passwd /etc/passwd
-USER app
+ADD index.php /var/www/html/index.php
+ADD test.php /var/www/html/test.php
+ADD www /var/www/html/www
 
-EXPOSE 8080
-CMD ["/main"]
+EXPOSE 80
+
+# Start the service
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]

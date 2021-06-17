@@ -1,16 +1,13 @@
-# eks-workshop-sample-api-service-go
+# aws-demo-php-simple-app
+Application was created for use with an AWS Partner blog post and will be used for demonstration purposes for other web applications.
 
-A sample Kubernetes service used in the [EKS Workshop](https://eksworkshop.com/) CI/CD Pipeline module.
+This web application utilizes the PHP scripting language to gather information system information and display that information using HTML/CSS/Chart.js.
 
-The Dockerfile is a [multi-stage](https://docs.docker.com/develop/develop-images/multistage-build/) build that
-compiles the Go application and then packages it in a minimal image that pulls from [scratch](https://hub.docker.com/_/scratch/).
-The size of this Docker image is ~ 3.2 MiB.
+Information gathered is a read-only file handler that reads information from /proc/. Information gathered is, CPU load, memory use, network packet types, and disk use. 
 
-The buildspec.yml file is used by the [AWS CodeBuild](https://aws.amazon.com/codebuild/) stage. In this file, it pulls down
-kubectl, builds the container image, pushes the image to [Amazon ECR](https://aws.amazon.com/ecr/) and then deploys the change to the
-[Amazon EKS Cluster](https://aws.amazon.com/eks/).
+Features:
+ - Simple PHP application tested on PHP 5.3 - 5.6
+ - Load generation utility included
 
-In the hello-k8s.yml file, you will find the Kubernetes [service](https://kubernetes.io/docs/concepts/services-networking/service/) and
-[deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) definitions. The service is configured with
-a [LoadBalancer](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/) which prompts Kubernetes
-to launch an external load balancer using an [AWS ELB](https://aws.amazon.com/elasticloadbalancing/).
+Other Items:
+ - Currently no database test capabilities
