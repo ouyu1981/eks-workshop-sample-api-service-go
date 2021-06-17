@@ -13,3 +13,13 @@ files:
    destination: /var/www/html/www
  - source: /index.php
    destination: /var/www/html/index.php
+hooks:
+  ApplicationStop: stop.sh
+  BeforeInstall:
+    - location: stop.sh
+  AfterInstall:
+    - location: start.sh
+      timeout: 10
+  ApplicationStart:
+    - location: start.sh
+      timeout: 10
